@@ -1,0 +1,51 @@
+export const projects = [
+  {
+    id: 1,
+    title: "Hebron-ivoire Shops",
+    description: "Plateforme e-commerce multiservices intégrant une boutique générale, une librairie chrétienne (avec gestion de TVA complexe) et un service de réservation/commande de repas.",
+    tags: ["Next.js", "E-commerce", "Full-Stack"],
+    link: "https://hebronivoireshops.com",
+  },
+  {
+    id: 2,
+    title: "Esther Bella Fashion",
+    description: "Création d'une boutique en ligne pour une marque de mode basée à Abidjan. Focus particulier sur l'optimisation SEO, la génération de sitemap et l'expérience utilisateur.",
+    tags: ["React", "SEO", "E-commerce"],
+    link: "https://esther-bella-shop.vercel.app/",
+  },
+  {
+    id: 3,
+    title: "Bio Medical",
+    description: "Site web permettant d'accéder à des médicaments de Yupi global. Développement complet de l'interface et intégration du backend.",
+    tags: ["Next.js", "Mobile/desktop", "UI/UX", "MongoDB"],
+    link: "https://bio-medical-babaults-projects.vercel.app/",
+  },
+  {
+    id: 4,
+    title: "Rotten Tomatoes",
+    description: "Site web permettant d'accéder au notes des films. Développement complet de l'interface et intégration du backend.",
+    tags: ["Next.js", "Mobile/desktop", "UI/UX", "MongoDB"],
+    link: "https://movies-tomatoe.vercel.app/",
+  },
+  {
+    id: 5,
+    title: "Online office",
+    description: "Application mobile permettant d'accéder à des services de secrétariat à distance. Développement complet de l'interface et intégration du backend.",
+    tags: ["React Native", "Mobile", "UI/UX"],
+    link: "/en-construction",
+  },
+  {
+    id: 6,
+    title: "YOWL",
+    description: "Plateforme de publication de contenu libre. Développement de bout en bout (Front-end et Back-end) du système de publications et de gestion des liens.",
+    tags: ["Laravel", "PHP", "Full-Stack"],
+    link: "/en-construction",
+  },
+  {
+    id: 7,
+    title: "EPICTURE",
+    description: "Clone mobile de l'application Trello. Développement complet des workspaces, gestion d'état et synchronisation avec le backend.",
+    tags: ["React Native", "Mobile", "API"],
+    link: "/en-construction",
+  },
+];
