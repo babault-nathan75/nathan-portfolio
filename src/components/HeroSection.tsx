@@ -49,7 +49,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Développeur Full-Stack basé à Abidjan. Je conçois des applications web et mobiles robustes avec une expertise sur <span className="text-white font-semibold">Laravel, React Native, et Next.js</span>.
+              Développeur Full-Stack basé à Abidjan. Je conçois des applications web et mobiles robustes avec une expertise sur <span className="text-white font-semibold">Laravel, SQL, MongoDB, TailwindCSS, React, et Next.js</span>.
             </motion.p>
             
             <motion.div

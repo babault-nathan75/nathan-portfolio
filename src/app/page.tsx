@@ -1,4 +1,6 @@
 import HeroSection from "@/components/HeroSection";
+import SkillsSection from "@/components/SkillsSection";
+import ExperienceSection from "@/components/ExperienceSection";
 import ProjectsGrid from "@/components/ProjectsGrid";
 import ContactSection from "@/components/ContactSection";
 
@@ -6,6 +8,11 @@ export default function Home() {
   return (
     <main className="bg-gray-950 min-h-screen">
       <HeroSection />
+      
+      {/* Les deux nouvelles sections ajoutées ! */}
+      <SkillsSection />
+      <ExperienceSection />
+      
       <ProjectsGrid />
       <ContactSection />
       
