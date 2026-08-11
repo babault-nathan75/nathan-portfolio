@@ -5,20 +5,20 @@ import { Briefcase, GraduationCap } from 'lucide-react';
 
 const experiences = [
   {
-    type: 'work',
-    title: 'Stage en informatique (06 Mois)',
-    organization: 'CNTSCI',
-    date: 'Expérience Professionnelle',
-    description: "Conception d'application web local, Assistance Technique et Collection de données.",
-    icon: <Briefcase size={20} className="text-blue-400" />
-  },
-  {
     type: 'education',
-    title: 'Formation Développeur Fullstack',
-    organization: 'WECODE, Abidjan',
-    date: '2025',
+    title: 'Attestation de formation en développement FULL-STACK',
+    organization: 'WECODE, GIZ, FORPRODE, EPITECH',
+    date: '2026',
     description: "Spécialisation dans le développement web moderne (Front-end et Back-end).",
     icon: <GraduationCap size={20} className="text-purple-400" />
+  },
+  {
+    type: 'work',
+    title: 'Stage en informatique (06 Mois)',
+    organization: 'Centre National de Transfusion Sanguine de Côte d’Ivoire',
+    date: '2025',
+    description: "Conception d'application web local, Assistance Technique et Collection de données.",
+    icon: <Briefcase size={20} className="text-blue-400" />
   },
   {
     type: 'education',
@@ -48,8 +48,8 @@ export default function ExperienceSection() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Mon Parcours</h2>
-          <p className="text-gray-400 text-lg">Expériences professionnelles et cursus académique.</p>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">Mon <span className="bg-gradient-to-r from-blue-400 to-indigo-600 bg-clip-text text-transparent">Parcours</span></h2>
+          <p className="text-gray-400 text-lg">Cursus académique et expériences professionnelles.</p>
         </motion.div>
 
         <div className="relative border-l border-gray-800 ml-3 md:ml-6 space-y-12">

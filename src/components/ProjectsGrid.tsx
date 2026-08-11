@@ -16,7 +16,7 @@ export default function ProjectsGrid() {
           transition={{ duration: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Mes Projets Réalisés</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">Mes <span className="bg-gradient-to-r from-blue-100 to-indigo-600 bg-clip-text text-transparent">Projets Réalisés</span></h2>
           <p className="text-gray-400 text-lg max-w-2xl">
             Découvrez une sélection de mes applications web et mobiles, allant de la digitalisation de commerces locaux aux outils de gestion internes.
           </p>
@@ -48,8 +48,8 @@ export default function ProjectsGrid() {
               </div>
 
               <div className="flex items-center gap-4 mt-auto pt-4 border-t border-gray-800">
-                <Link href={project.link} className="text-gray-400 hover:text-white transition-colors flex items-center gap-2 text-sm ml-auto">
-                  Live <ExternalLink size={16} />
+                <Link href={project.link} className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 text-sm ml-auto">
+                  Voir <ExternalLink size={16} />
                 </Link>
               </div>
             </motion.div>

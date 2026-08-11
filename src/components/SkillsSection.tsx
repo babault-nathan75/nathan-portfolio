@@ -5,11 +5,19 @@ import { motion } from 'framer-motion';
 const skills = [
   { name: 'HTML', level: 88, color: 'from-blue-400 to-blue-600' },
   { name: 'CSS', level: 75, color: 'from-blue-400 to-blue-600' },
-  { name: 'REACT', level: 78, color: 'from-blue-400 to-blue-600' },
-  { name: 'NEXT.JS', level: 83, color: 'from-blue-400 to-blue-600' },
-  { name: 'NODE.JS', level: 65, color: 'from-purple-400 to-blue-500' },
-  { name: 'TAILWIND CSS', level: 80, color: 'from-purple-400 to-blue-500' },
-  { name: 'FIGMA', level: 60, color: 'from-purple-400 to-blue-500' },
+  { name: 'Laravel', level: 65, color: 'from-blue-400 to-blue-600' },
+  { name: 'PHP', level: 70, color: 'from-blue-400 to-blue-600' },
+  { name: 'JavaScript', level: 80, color: 'from-blue-400 to-blue-600' },
+  { name: 'REACT', level: 87, color: 'from-blue-400 to-blue-600' },
+  { name: 'NEXT.JS', level: 91, color: 'from-blue-400 to-blue-600' },
+  { name: 'NODE.JS', level: 74, color: 'from-purple-400 to-blue-500' },
+  { name: 'PYTHON', level: 70, color: 'from-purple-400 to-blue-500' },
+  { name: 'GitHub', level: 88, color: 'from-purple-400 to-blue-500' },
+  { name: 'SUPABASE', level: 75, color: 'from-purple-400 to-blue-500' },
+  { name: 'MONGODB', level: 80, color: 'from-purple-400 to-blue-500' },
+  { name: 'TAILWIND CSS', level: 86, color: 'from-purple-400 to-blue-500' },
+  { name: 'SQL', level: 90, color: 'from-purple-400 to-blue-500' },
+  { name: 'FIGMA', level: 73, color: 'from-purple-400 to-blue-500' },
 ];
 
 export default function SkillsSection() {
@@ -26,7 +34,7 @@ export default function SkillsSection() {
             Capacité Technique //
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-200">
-            Stack de <span className="text-gray-500">Puissance</span>
+            Stack de <span className="bg-gradient-to-r from-blue-400 to-indigo-600 bg-clip-text text-transparent">Puissance</span>
           </h2>
         </motion.div>
 
@@ -66,10 +74,10 @@ export default function SkillsSection() {
           >
             <div className="w-32 h-32 rounded-full border border-gray-800 flex items-center justify-center relative mb-4">
               <div className="absolute inset-0 rounded-full border-t-2 border-cyan-400 animate-spin-slow"></div>
-              <span className="text-3xl font-light">01</span>
+              <span className="text-3xl font-light">02</span>
             </div>
-            <span className="text-xs tracking-widest text-gray-500 uppercase">Année</span>
-            <span className="text-xs tracking-widest text-cyan-500 uppercase">Expérience</span>
+            <span className="text-xs tracking-widest text-gray-500 uppercase">Années</span>
+            <span className="text-xs tracking-widest text-cyan-500 uppercase">Expériences</span>
           </motion.div>
 
           <motion.div 
