@@ -2,25 +2,26 @@
 
 import { motion } from 'framer-motion';
 
-const skills = [
-  { name: 'HTML', level: 88, color: 'from-blue-400 to-blue-600' },
-  { name: 'CSS', level: 75, color: 'from-blue-400 to-blue-600' },
-  { name: 'Laravel', level: 65, color: 'from-blue-400 to-blue-600' },
-  { name: 'PHP', level: 70, color: 'from-blue-400 to-blue-600' },
-  { name: 'JavaScript', level: 80, color: 'from-blue-400 to-blue-600' },
-  { name: 'REACT', level: 87, color: 'from-blue-400 to-blue-600' },
-  { name: 'NEXT.JS', level: 91, color: 'from-blue-400 to-blue-600' },
-  { name: 'NODE.JS', level: 74, color: 'from-purple-400 to-blue-500' },
-  { name: 'PYTHON', level: 70, color: 'from-purple-400 to-blue-500' },
-  { name: 'GitHub', level: 88, color: 'from-purple-400 to-blue-500' },
-  { name: 'SUPABASE', level: 75, color: 'from-purple-400 to-blue-500' },
-  { name: 'MONGODB', level: 80, color: 'from-purple-400 to-blue-500' },
-  { name: 'TAILWIND CSS', level: 86, color: 'from-purple-400 to-blue-500' },
-  { name: 'SQL', level: 90, color: 'from-purple-400 to-blue-500' },
-  { name: 'FIGMA', level: 73, color: 'from-purple-400 to-blue-500' },
-];
+type Skill = {
+  id: number;
+  name: string;
+  level: number;
+  color: 'blue' | 'purple';
+};
 
-export default function SkillsSection() {
+type Stat = {
+  id: number;
+  value: string;
+  label_top: string;
+  label_bottom: string;
+};
+
+const GRADIENTS = {
+  blue: 'from-blue-400 to-blue-600',
+  purple: 'from-purple-400 to-blue-500',
+} as const;
+
+export default function SkillsSection({ skills, stats }: { skills: Skill[]; stats: Stat[] }) {
   return (
     <section className="py-24 bg-black text-white px-6 border-t border-gray-900">
       <div className="max-w-4xl mx-auto">
@@ -41,7 +42,7 @@ export default function SkillsSection() {
         <div className="space-y-8 mb-20">
           {skills.map((skill, index) => (
             <motion.div 
-              key={skill.name}
+              key={skill.id}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -57,7 +58,7 @@ export default function SkillsSection() {
                   whileInView={{ width: `${skill.level}%` }}
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: 0.2 + index * 0.1, ease: "easeOut" }}
-                  className={`h-full bg-gradient-to-r ${skill.color}`}
+                  className={`h-full bg-gradient-to-r ${GRADIENTS[skill.color]}`}
                 />
               </div>
             </motion.div>
@@ -66,34 +67,28 @@ export default function SkillsSection() {
 
         {/* Statistiques circulaires */}
         <div className="flex justify-center gap-12 md:gap-24">
-          <motion.div 
-            className="flex flex-col items-center"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <div className="w-32 h-32 rounded-full border border-gray-800 flex items-center justify-center relative mb-4">
-              <div className="absolute inset-0 rounded-full border-t-2 border-cyan-400 animate-spin-slow"></div>
-              <span className="text-3xl font-light">02</span>
-            </div>
-            <span className="text-xs tracking-widest text-gray-500 uppercase">Années</span>
-            <span className="text-xs tracking-widest text-cyan-500 uppercase">Expériences</span>
-          </motion.div>
-
-          <motion.div 
-            className="flex flex-col items-center"
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="w-32 h-32 rounded-full border border-gray-800 flex items-center justify-center relative mb-4">
-              <div className="absolute inset-0 rounded-full border-t-2 border-cyan-400 animate-spin-slow" style={{ animationDirection: 'reverse' }}></div>
-              <span className="text-2xl font-light italic">plusieurs</span>
-            </div>
-            <span className="text-xs tracking-widest text-gray-500 uppercase">Projets</span>
-            <span className="text-xs tracking-widest text-cyan-500 uppercase">Réalisés</span>
-          </motion.div>
+          {stats.map((stat, index) => (
+            <motion.div 
+              key={stat.id}
+              className="flex flex-col items-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.2 }}
+            >
+              <div className="w-32 h-32 rounded-full border border-gray-800 flex items-center justify-center relative mb-4">
+                <div
+                  className="absolute inset-0 rounded-full border-t-2 border-cyan-400 animate-spin-slow"
+                  style={index % 2 === 1 ? { animationDirection: 'reverse' } : undefined}
+                ></div>
+                <span className={stat.value.length > 3 ? "text-2xl font-light italic" : "text-3xl font-light"}>
+                  {stat.value}
+                </span>
+              </div>
+              <span className="text-xs tracking-widest text-gray-500 uppercase">{stat.label_top}</span>
+              <span className="text-xs tracking-widest text-cyan-500 uppercase">{stat.label_bottom}</span>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

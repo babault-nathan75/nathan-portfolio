@@ -1,9 +1,22 @@
 'use client';
 
+import { useActionState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { submitContact, type ContactState } from '@/lib/actions';
 
-export default function ContactSection() {
+type ContactProfile = {
+  contact_location: string;
+  contact_availability: string;
+  contact_email: string;
+  contact_phone: string;
+};
+
+const initial: ContactState = {};
+
+export default function ContactSection({ profile }: { profile: ContactProfile }) {
+  const [state, formAction, pending] = useActionState<ContactState, FormData>(submitContact, initial);
+
   return (
     <section id="contact" className="py-24 bg-gray-900 text-white px-6 border-t border-gray-800">
       <div className="max-w-6xl mx-auto">
@@ -35,7 +48,7 @@ export default function ContactSection() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-1">Localisation</h3>
-                <p className="text-gray-400">Yopougon, Abidjan<br />Disponible en présentiel et télétravail</p>
+                <p className="text-gray-400">{profile.contact_location}<br />{profile.contact_availability}</p>
               </div>
             </div>
 
@@ -45,8 +58,8 @@ export default function ContactSection() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-1">Email</h3>
-                <a href="mailto:nathan.babault@epitech.eu" className="text-gray-400 hover:text-white transition-colors">
-                  nathan.babault@epitech.eu
+                <a href={`mailto:${profile.contact_email}`} className="text-gray-400 hover:text-white transition-colors">
+                  {profile.contact_email}
                 </a>
               </div>
             </div>
@@ -57,8 +70,8 @@ export default function ContactSection() {
               </div>
               <div>
                 <h3 className="text-lg font-semibold mb-1">Téléphone</h3>
-                <a href="tel:+2250103573023" className="text-gray-400 hover:text-white transition-colors">
-                  +225 01 03 57 30 23
+                <a href={`tel:${profile.contact_phone.replace(/\s/g, '')}`} className="text-gray-400 hover:text-white transition-colors">
+                  {profile.contact_phone}
                 </a>
               </div>
             </div>
@@ -71,9 +84,11 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.4 }}
             className="bg-gray-950 p-8 rounded-2xl border border-gray-800 space-y-6"
-            action="https://formspree.io/f/xbdzvlwr" // On en parle juste en bas !
-            method="POST"
+            action={formAction}
           >
+            {/* Honeypot anti-spam (invisible pour les humains) */}
+            <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label htmlFor="name" className="text-sm font-medium text-gray-400">Nom complet</label>
@@ -90,8 +105,19 @@ export default function ContactSection() {
               <textarea id="message" name="message" required rows={5} className="w-full bg-gray-900 border border-gray-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all resize-none" placeholder="Parlez-moi de votre projet..."></textarea>
             </div>
 
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2">
-              Envoyer le message <Send size={18} />
+            {state.error && (
+              <p className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">
+                {state.error}
+              </p>
+            )}
+            {state.ok && (
+              <p className="text-sm text-green-400 bg-green-500/10 border border-green-500/30 rounded-lg px-3 py-2">
+                Merci ! Votre message a bien été envoyé, je vous réponds au plus vite.
+              </p>
+            )}
+
+            <button type="submit" disabled={pending} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-60">
+              {pending ? 'Envoi…' : 'Envoyer le message'} <Send size={18} />
             </button>
           </motion.form>
         </div>

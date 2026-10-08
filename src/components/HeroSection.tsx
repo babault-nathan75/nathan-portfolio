@@ -1,11 +1,42 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from 'lucide-react';
+import { ArrowRight, Download, Github, Globe, Linkedin, Mail, MapPin, Twitter } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function HeroSection() {
+type Profile = {
+  first_name: string;
+  tagline: string;
+  expertise: string;
+  location: string;
+  available: boolean;
+  available_text: string;
+  cta_projects_label: string;
+  cta_cv_label: string;
+};
+
+type SocialLink = { id: number; label: string; url: string; icon: string };
+
+const SOCIAL_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+  github: Github,
+  linkedin: Linkedin,
+  mail: Mail,
+  globe: Globe,
+  twitter: Twitter,
+};
+
+export default function HeroSection({
+  profile,
+  socials,
+  photoUrl,
+  cvUrl,
+}: {
+  profile: Profile;
+  socials: SocialLink[];
+  photoUrl: string;
+  cvUrl: string;
+}) {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gray-950 text-white px-6 py-20 overflow-hidden">
       {/* Effet de fond subtil */}
@@ -16,6 +47,7 @@ export default function HeroSection() {
           
           {/* COLONNE GAUCHE : Texte et boutons */}
           <div className="lg:col-span-7 text-center lg:text-left order-2 lg:order-1">
+            {profile.available && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -27,9 +59,10 @@ export default function HeroSection() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                 </span>
-                Disponible pour CDI & Freelance
+                {profile.available_text}
               </span>
             </motion.div>
+            )}
 
             <motion.h1 
               className="text-4xl md:text-6xl font-bold tracking-tight mb-6 leading-tight"
@@ -39,7 +72,7 @@ export default function HeroSection() {
             >
               Salut, je suis <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-                BABAULT Nathan Charles
+                {profile.first_name}
               </span>
             </motion.h1>
 
@@ -49,7 +82,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Développeur Full-Stack basé à Abidjan. Je conçois des applications web et mobiles robustes avec une expertise sur <span className="text-white font-semibold">Laravel, SQL, MongoDB, TailwindCSS, PHP, React, Next.js, Supabase et Python</span>.
+              {profile.tagline} <span className="text-white font-semibold">{profile.expertise}</span>
             </motion.p>
             
             <motion.div
@@ -59,7 +92,7 @@ export default function HeroSection() {
               transition={{ delay: 0.3 }}
             >
                 <MapPin size={18} className="text-gray-600"/>
-                <span>Yopougon, Abidjan</span>
+                <span>{profile.location}</span>
             </motion.div>
 
             <motion.div 
@@ -72,15 +105,15 @@ export default function HeroSection() {
                 href="#projets" 
                 className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-full font-medium hover:bg-blue-700 transition-colors w-full sm:w-auto justify-center shadow-lg shadow-blue-500/20"
               >
-                Voir mes projets <ArrowRight size={18} />
+                {profile.cta_projects_label} <ArrowRight size={18} />
               </Link>
               
               <Link 
-                href="/cv-nathan-babault.pdf" 
+                href={cvUrl} 
                 target="_blank"
                 className="flex items-center gap-2 bg-gray-800 text-white px-8 py-3 rounded-full font-medium hover:bg-gray-700 transition-colors border border-gray-700 w-full sm:w-auto justify-center"
               >
-                Télécharger mon CV <Download size={18} />
+                {profile.cta_cv_label} <Download size={18} />
               </Link>
             </motion.div>
 
@@ -91,18 +124,20 @@ export default function HeroSection() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
-              <Link href="https://github.com/babault-nathan75" target="_blank" className="hover:text-white hover:scale-110 transition-all">
-                <Github size={24} />
-                <span className="sr-only">GitHub</span>
-              </Link>
-              <Link href="https://www.linkedin.com/in/nathan-babault-a57207372/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" className="hover:text-white hover:scale-110 transition-all">
-                <Linkedin size={24} />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
-              <Link href="mailto:nathan.babault@epitech.eu" className="hover:text-white hover:scale-110 transition-all">
-                <Mail size={24} />
-                <span className="sr-only">Email</span>
-              </Link>
+              {socials.map((social) => {
+                const Icon = SOCIAL_ICONS[social.icon] ?? Globe;
+                return (
+                  <Link
+                    key={social.id}
+                    href={social.url}
+                    target={social.url.startsWith("mailto:") ? undefined : "_blank"}
+                    className="hover:text-white hover:scale-110 transition-all"
+                  >
+                    <Icon size={24} />
+                    <span className="sr-only">{social.label}</span>
+                  </Link>
+                );
+              })}
             </motion.div>
           </div>
 
@@ -120,8 +155,8 @@ export default function HeroSection() {
               {/* Conteneur de l'image : Rectangle Vertical (aspect-[2/3]) */}
               <div className="relative aspect-[2/3] w-64 md:w-72 border-4 border-gray-800 rounded-3xl overflow-hidden shadow-2xl shadow-black/50 bg-gray-900 group-hover:border-blue-500/50 transition-colors duration-300 z-10">
                 <Image 
-                  src="/nathan.png" // <--- REMPLACE PAR LE NOM EXACT DE TA PHOTO DANS /PUBLIC
-                  alt="Nathan Babault - Développeur Full-Stack"
+                  src={photoUrl}
+                  alt={`${profile.first_name} - Développeur Full-Stack`}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                   priority

@@ -3,42 +3,16 @@
 import { motion } from 'framer-motion';
 import { Briefcase, GraduationCap } from 'lucide-react';
 
-const experiences = [
-  {
-    type: 'education',
-    title: 'Attestation de formation en développement FULL-STACK',
-    organization: 'WECODE, GIZ, FORPRODE, EPITECH',
-    date: '2026',
-    description: "Spécialisation dans le développement web moderne (Front-end et Back-end).",
-    icon: <GraduationCap size={20} className="text-purple-400" />
-  },
-  {
-    type: 'work',
-    title: 'Stage en informatique (06 Mois)',
-    organization: 'Centre National de Transfusion Sanguine de Côte d’Ivoire',
-    date: '2025',
-    description: "Conception d'application web local, Assistance Technique et Collection de données.",
-    icon: <Briefcase size={20} className="text-blue-400" />
-  },
-  {
-    type: 'education',
-    title: "BTS Informatique Développeur d'Application",
-    organization: 'Institut de Formation Sainte Marie, Abidjan',
-    date: '2023 - 2024',
-    description: "Formation technique approfondie en développement d'applications.",
-    icon: <GraduationCap size={20} className="text-purple-400" />
-  },
-  {
-    type: 'education',
-    title: 'Baccalauréat D',
-    organization: 'Groupe Scolaire Israël, Bonoua',
-    date: '2021 - 2022',
-    description: "Série scientifique.",
-    icon: <GraduationCap size={20} className="text-purple-400" />
-  }
-];
+type Experience = {
+  id: number;
+  type: 'work' | 'education';
+  title: string;
+  organization: string;
+  date_label: string;
+  description: string;
+};
 
-export default function ExperienceSection() {
+export default function ExperienceSection({ experiences }: { experiences: Experience[] }) {
   return (
     <section id="parcours" className="py-24 bg-gray-950 text-white px-6">
       <div className="max-w-4xl mx-auto">
@@ -55,7 +29,7 @@ export default function ExperienceSection() {
         <div className="relative border-l border-gray-800 ml-3 md:ml-6 space-y-12">
           {experiences.map((exp, index) => (
             <motion.div 
-              key={index}
+              key={exp.id}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -64,11 +38,15 @@ export default function ExperienceSection() {
             >
               {/* Icône sur la ligne du temps */}
               <div className="absolute -left-5 md:-left-6 top-1 bg-gray-900 border border-gray-700 p-2 rounded-full">
-                {exp.icon}
+                {exp.type === 'work' ? (
+                  <Briefcase size={20} className="text-blue-400" />
+                ) : (
+                  <GraduationCap size={20} className="text-purple-400" />
+                )}
               </div>
               
               <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl hover:border-gray-700 transition-colors">
-                <span className="text-sm font-medium text-blue-500 mb-2 block">{exp.date}</span>
+                <span className="text-sm font-medium text-blue-500 mb-2 block">{exp.date_label}</span>
                 <h3 className="text-xl font-bold text-gray-100 mb-1">{exp.title}</h3>
                 <h4 className="text-md text-gray-400 mb-4">{exp.organization}</h4>
                 <p className="text-gray-500 text-sm leading-relaxed">

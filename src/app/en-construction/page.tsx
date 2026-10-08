@@ -28,7 +28,7 @@ export default function EnConstruction() {
         </h1>
         
         <p className="text-gray-400 text-lg max-w-md mb-10 leading-relaxed">
-          Je travaille actuellement sur le développement de cette application, il s'agit d'un projet interne/privé. Vous en saurez plus très bientôt !
+          Je travaille actuellement sur le développement de cette application, il s&apos;agit d&apos;un projet interne/privé. Vous en saurez plus très bientôt !
         </p>
 
         <Link 

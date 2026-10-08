@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { getPublicData } from "@/lib/public-data";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,15 +13,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "BABAULT Nathan | Développeur Full-Stack",
-  description: "Portfolio de Nathan BABAULT, Développeur Full-Stack spécialisé en solutions web et mobiles.",
-  icons: {
-    icon: '/favicon.png', // Chemin vers ton icône dans le dossier public
-    shortcut: '/favicon.png',
-    apple: '/apple-touch-icon.png', // Optionnel : pour les appareils iOS
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getPublicData();
+  return {
+    title: settings.site_title,
+    description: settings.site_description,
+    icons: {
+      icon: "/favicon.png",
+      shortcut: "/favicon.png",
+    },
+  };
+}
 
 export default function RootLayout({
   children,
@@ -29,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

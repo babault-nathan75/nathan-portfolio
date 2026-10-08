@@ -1,11 +1,19 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import Link from 'next/link';
-import { projects } from '@/lib/data';
 
-export default function ProjectsGrid() {
+type Project = {
+  id: number;
+  title: string;
+  description: string;
+  tags: string;
+  link: string;
+  status: 'published' | 'construction';
+};
+
+export default function ProjectsGrid({ projects }: { projects: Project[] }) {
   return (
     <section id="projets" className="py-24 bg-gray-950 text-white px-6">
       <div className="max-w-6xl mx-auto">
@@ -23,14 +31,18 @@ export default function ProjectsGrid() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+          {projects.map((project, index) => {
+            // Les projets « en construction » pointent vers la page dédiée
+            const href = project.status === 'construction' ? '/en-construction' : (project.link || '/en-construction');
+            const tagList = project.tags.split(',').map((t) => t.trim()).filter(Boolean);
+            return (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-gray-900 border border-gray-800 rounded-2xl p-6 hover:border-blue-500/50 transition-colors group"
+              transition={{ duration: 0.5, delay: (index % 6) * 0.1 }}
+              className="bg-gray-900 border border-gray-800 rounded-2xl p-6 hover:border-blue-500/50 transition-colors group flex flex-col"
             >
               <h3 className="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors">
                 {project.title}
@@ -39,8 +51,8 @@ export default function ProjectsGrid() {
                 {project.description}
               </p>
               
-              <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                {project.tags.map(tag => (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {tagList.map(tag => (
                   <span key={tag} className="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded-md">
                     {tag}
                   </span>
@@ -48,12 +60,13 @@ export default function ProjectsGrid() {
               </div>
 
               <div className="flex items-center gap-4 mt-auto pt-4 border-t border-gray-800">
-                <Link href={project.link} className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 text-sm ml-auto">
-                  Voir <ExternalLink size={16} />
+                <Link href={href} className="text-gray-400 hover:text-blue-400 transition-colors flex items-center gap-2 text-sm ml-auto">
+                  {project.status === 'construction' ? 'Bientôt' : 'Voir'} <ExternalLink size={16} />
                 </Link>
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
